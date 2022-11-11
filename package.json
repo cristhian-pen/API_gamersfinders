@@ -1,0 +1,17 @@
+{
+  "name": "api_gamersfinders",
+  "version": "1.0.0",
+  "description": "Criação da api do projeto gamerfinders",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cristhian moura",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "sequelize": "^6.25.5"
+  }
+}
