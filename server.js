@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const sequelize = require('./App/config/db');
 
 
 const bodyParser = require('body-parser');
@@ -12,6 +13,12 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.use(express());
 
 
-app.listen('PORT', () => {
+sequelize.authenticate().then(() => {
+    console.log('Conection has been established successfully.');
+}).catch(() => {
+    console.log('Connection lost!');
+});
+
+app.listen('3000', () => {
     console.log(`Server running on port ${PORT}`);
 })
