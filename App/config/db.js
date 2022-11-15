@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize( 'root', 'Ironmharkv10#', 'DBAGF', {
-    host:'54.94.231.198',
+const sequelize = new Sequelize( 'DBAGF', 'dbagf', 'ironmharkv10', {
+    host:'localhost',
     dialect:'mysql'
 });
 
