@@ -88,4 +88,4 @@ typings/
 .dynamodb/
 
 # Database configuration
-App/config/db
+App/config
