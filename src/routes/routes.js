@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const express = require('express');
 const router = express.Router();
 
@@ -8,8 +7,12 @@ router.get('/', (req, res) => {
     res.send('Its Works!');
 });
 
-router.post('/register' + json, (req, res) => {
+router.post('/reg' , (req, res) => {
     const { nickname, password } = req.body;
+
+    console.log(nickname);
+    console.log(password);
+    
 
     usuario.create({
         nickname: nickname,

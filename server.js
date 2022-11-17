@@ -16,13 +16,13 @@ const readUser = require('./src/routes/info');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true }));
-app.use(express());
+app.use(express.json());
 
 //Rotas
 app.get('/', work);
 app.get('/info/:id', infos);
 app.get('/info', readUser);
-app.post('/register', reg);
+app.post('/reg', reg);
 app.put('/userupd/:id', updateUser);
 app.delete('/userdel/:id', deleteUser);
 app.delete('/userdel/:id', deleteUser);
