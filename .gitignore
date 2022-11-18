@@ -88,4 +88,7 @@ typings/
 .dynamodb/
 
 # Database configuration
-App/config
+App/config/db.js/*
+
+#variaveis de ambiente
+.env

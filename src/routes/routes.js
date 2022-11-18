@@ -12,7 +12,6 @@ router.post('/reg' , (req, res) => {
 
     console.log(nickname);
     console.log(password);
-    
 
     usuario.create({
         nickname: nickname,

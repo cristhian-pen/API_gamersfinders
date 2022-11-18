@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const sequelize = require('./App/config/db');
-
+const session = require('express-session');
+//require('dotenv-safe').config(`${}`);
 
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3001;
@@ -13,10 +14,14 @@ const infos = require('./src/routes/info');
 const updateUser = require('./src/routes/update');
 const deleteUser = require('./src/routes/delete');
 const readUser = require('./src/routes/info');
+const loginUser = require('./src/routes/login');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(express.json());
+app.use(session({
+    secret: 'jsakjasagjagaljdgj'
+}))
 
 //Rotas
 app.get('/', work);
@@ -26,6 +31,7 @@ app.post('/reg', reg);
 app.put('/userupd/:id', updateUser);
 app.delete('/userdel/:id', deleteUser);
 app.delete('/userdel/:id', deleteUser);
+app.get('/login', loginUser);
 
 
 sequelize.authenticate().then(() => {
@@ -34,6 +40,6 @@ sequelize.authenticate().then(() => {
     console.log('Connection lost!');
 });
 
-app.listen('3001', () => {
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })
