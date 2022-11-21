@@ -1,27 +1,21 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router()
 
-const usuario = require('../../App/model/model');
+const { createUser, loginUser,  
+        updateUser, findUser,
+        users, deleteUser} = require('../../App/controller/controller');
+
+
 
 router.get('/', (req, res) => {
     res.send('Its Works!');
 });
+router.get('/login', loginUser);
+router.get('/info/:id', findUser);
+router.get('/info', users);
+router.post('/reg', createUser);
+router.put('/userupd/:id', updateUser);
+router.delete('/userdel/:id', deleteUser);
 
-router.post('/reg' , (req, res) => {
-    const { nickname, password } = req.body;
-
-    console.log(nickname);
-    console.log(password);
-
-    usuario.create({
-        nickname: nickname,
-        password: password
-    });
-    try {
-        res.status(200).send('User created');
-    } catch (error) {
-        res.sendStatus(500);
-    }
-});
 
 module.exports = router;

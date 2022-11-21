@@ -13,12 +13,20 @@ const usuario = sequelize.define('usuarios', {
         allowNull: false
     },
     password: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull:false
     },
     classe: {
         type: DataTypes.STRING,
-        allowNull: true,
-        autoIncrement: false
+        allowNull: true
+    },
+    jogos: {
+        type: DataTypes.BLOB,
+        allowNull: true
+    },
+    personagem: {
+        type: DataTypes.BLOB,
+        allowNull:true
     }
 });
 

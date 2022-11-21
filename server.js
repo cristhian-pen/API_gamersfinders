@@ -9,12 +9,12 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3001;
 
 const work = require('./src/routes/routes.js');
-const reg = require('./src/routes/routes');
-const infos = require('./src/routes/info');
-const updateUser = require('./src/routes/update');
-const deleteUser = require('./src/routes/delete');
-const readUser = require('./src/routes/info');
-const loginUser = require('./src/routes/login');
+const reg = require('./src/routes/routes.js');
+const infos = require('./src/routes/routes.js');
+const updateUser = require('./src/routes/routes.js');
+const deleteUser = require('./src/routes/routes.js');
+const readUser = require('./src/routes/routes.js');
+const loginUser = require('./src/routes/routes.js');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true }));

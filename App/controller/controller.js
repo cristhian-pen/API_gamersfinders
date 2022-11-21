@@ -1,5 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const usuario = require('../model/model');
 
@@ -36,32 +37,69 @@ async function deleteUser(req, res) {
     usuario.findAll().then((result) => res.json(result));
 }//DELETE
 
- async function loginUser(req, res) {
-    //catch das informações do frontend
-    const { nickname, password } = req.query;
-
-    //OBTENÇÃO DOS DADOS DO USUARIO
-    const user = await usuario.findOne({
-        attributes: ['id', 'nickname', 'password'],
-        where: {
-            nickname: nickname,
-            password: password
-        }
-    });
-    console.log()
-    //JWT validação
-    if (user === null) {
-        res.status(404).send('User not found')
-    } else if(user.nickname === nickname && user.password === password){
-        const id = user.id;
-        const token = jwt.sign({id}, process.env.JWT_KEY, {
-            expiresIn: 300 // expira em 5min
+async function loginUser(req, res) {
+    //validação da senha
+    const valida = (hpass, userpass) => {
+       return new Promise(resolve => {
+        bcrypt.compare(userpass, hpass, (err, res) => {
+            resolve(res);
         });
-        return res.json({ auth: true, token: token});
-    } else {
-        res.status(500).send('Internal problem');
+       });
     }
+
+    //catch das informações do frontend
+    const { nickname, password } = req.body;
+    
+        //OBTENÇÃO DOS DADOS DO USUARIO
+        const user = await usuario.findOne({
+            attributes: ['id', 'nickname', 'password'],
+            where: {
+                nickname: nickname,
+                password: password
+            }
+        });
+        
+        //validação do hash de senhas
+        const isValid = await valida(req.body.password, user.password);
+
+        //JWT
+        if (user === null) {
+            res.status(404).send('User not found')
+        } else if(!isValid){
+            const id = user.id;
+            const token = jwt.sign({ id }, process.env.JWT_KEY, {
+                expiresIn: 300 // expira em 5min
+            });
+            return res.json({ auth: true, token: token });
+        } else {
+            res.status(500).send('no anywere here');
+        }
 }
+
+
+async function createUser(req, res) {
+    const { nickname, password,
+        classe, jogos,
+        personagem } = req.body;
+
+    console.log(nickname);
+    console.log(password);
+
+    const password_hash = await bcrypt.hash(password, 12);
+
+    usuario.create({
+        nickname: nickname,
+        password: password_hash,
+        classe: classe,
+        jogos: jogos,
+        personagem: personagem
+    });
+    try {
+        res.status(200).send('User created');
+    } catch (error) {
+        res.sendStatus(500);
+    }
+}//create user
 
 
 module.exports = {
@@ -69,5 +107,6 @@ module.exports = {
     findUser,
     updateUser,
     deleteUser,
-    loginUser
+    loginUser,
+    createUser
 };
